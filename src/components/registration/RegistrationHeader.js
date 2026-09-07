@@ -9,17 +9,17 @@ export default function RegistrationHeader({ iiitName, uniqueStudentsCount, last
     <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-4 min-w-0">
-          <span className="sm:hidden text-xs font-black uppercase tracking-wider text-[#1b5e20]">Register</span>
+          <span className="sm:hidden text-xs font-black uppercase tracking-wider text-[#143D24]">Register</span>
           <div className="hidden sm:flex flex-col">
-            <span className="text-[10px] font-black uppercase tracking-widest text-[#c9972f]">Contingent Registration</span>
-            <span className="font-bold text-[#0a2112] truncate max-w-[200px] md:max-w-sm">{iiitName}</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-[#143D24]">Contingent Registration</span>
+            <span className="font-bold text-[#111111] truncate max-w-[200px] md:max-w-sm">{iiitName}</span>
           </div>
         </div>
         
         <div className="flex items-center gap-2 sm:gap-4 md:gap-6">
           {lastSaved && (
             <div className="hidden md:flex items-center gap-1.5 text-xs text-gray-500 font-medium">
-              <svg className="w-3.5 h-3.5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-3.5 h-3.5 text-[#143D24]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
               Saved locally at {lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -30,7 +30,7 @@ export default function RegistrationHeader({ iiitName, uniqueStudentsCount, last
             <div className="flex flex-col items-end">
               <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500">Unique Students</span>
               <div className="flex items-baseline gap-1">
-                <span className={`font-black text-lg ${isOverLimit ? 'text-red-600' : 'text-[#1b5e20]'}`}>
+                <span className={`font-black text-lg ${isOverLimit ? 'text-red-600' : 'text-[#143D24]'}`}>
                   {uniqueStudentsCount}
                 </span>
                 <span className="text-xs font-bold text-gray-400">/ {GLOBAL_RULES.MAX_UNIQUE_STUDENTS_PER_IIIT}</span>
@@ -46,7 +46,7 @@ export default function RegistrationHeader({ iiitName, uniqueStudentsCount, last
                   cy="18" 
                   r="16" 
                   fill="none" 
-                  className={isOverLimit ? "stroke-red-500" : "stroke-[#1b5e20]"} 
+                  className={isOverLimit ? "stroke-red-500" : "stroke-[#143D24]"} 
                   strokeWidth="4" 
                   strokeDasharray="100" 
                   strokeDashoffset={Math.max(0, 100 - (uniqueStudentsCount / GLOBAL_RULES.MAX_UNIQUE_STUDENTS_PER_IIIT) * 100)} 

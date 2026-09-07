@@ -88,16 +88,16 @@ export default function PaymentPending({ iiitCode, registrationData }) {
   const canFinalSubmit = !uploadBusy && !isSubmitting;
 
   return (
-    <div className="min-h-screen bg-[#faf6ee] font-sans pb-20">
-      <div className="bg-[#0a2112] text-white">
+    <div className="min-h-screen bg-[#F7F7F8] font-sans pb-20">
+      <div className="bg-[#0C0C0C] text-white border-b border-white/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div>
-              <span className="text-[10px] font-black uppercase tracking-widest text-[#c9972f] block">9th Inter-IIIT Sports Meet</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-[#60A5FA] block">9th Inter-IIIT Sports Meet</span>
               <span className="font-bold text-white text-lg">{registration.iiitName}</span>
             </div>
           </div>
-          <button onClick={handleLogout} className="text-sm font-bold hover:text-[#f5c518] transition-colors">
+          <button onClick={handleLogout} className="text-sm font-bold text-gray-300 hover:text-white transition-colors cursor-pointer">
             Log out
           </button>
         </div>

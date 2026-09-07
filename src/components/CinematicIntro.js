@@ -6,22 +6,10 @@ import { useState, useEffect, useRef } from 'react';
  * CinematicIntro Component
  * 
  * Purpose:
- * A one-time-per-session cinematic intro sequence inspired by the Twaran IIIT sports meet
- * digital experience.
- * 
- * 4-Phase Progression:
- * 1. Road Animation: A perspective-driven 3D track emerging from darkness in a forest-green arena.
- * 2. Text Reveal: "ROAD TO GLORY" scaling with gold/emerald chromatic glow.
- * 3. Champions Moment: Athlete silhouettes, rising championship trophy, and celebratory particles.
- * 4. Seamless Transition: Smooth dissolve into the main landing page without abrupt cuts.
- * 
- * Controls:
- * - Automatically skips if already played in the current browser session.
- * - Accessible "Skip Intro ✕" button and Escape key support.
- * - Hardware-accelerated GPU transforms and lightweight native Canvas particle engine.
+ * Minimalist Olympic-inspired intro sequence with 3D track, glowing typography,
+ * celebration particles, and smooth transition into the main landing page.
  */
 export default function CinematicIntro() {
-  // Intro lifecycle states: 'checking', 'playing', 'fading', 'done'
   const [stage, setStage] = useState(() => {
     if (typeof window === 'undefined') return 'checking';
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 'done';
@@ -31,7 +19,7 @@ export default function CinematicIntro() {
       return 'checking';
     }
   });
-  // Sub-phases: 1 = Road, 2 = Text Reveal, 3 = Champions Moment
+
   const [phase, setPhase] = useState(1);
   const canvasRef = useRef(null);
   const animFrameId = useRef(null);
@@ -44,34 +32,23 @@ export default function CinematicIntro() {
   useEffect(() => {
     if (stage !== 'checking') return undefined;
 
-    // 1. Session Storage Check
     try {
       const alreadyPlayed = sessionStorage.getItem('inter_iiit_intro_played');
       if (alreadyPlayed === 'true') {
         return undefined;
       }
-    } catch {
-      // Fallback if sessionStorage is disabled or restricted
-    }
+    } catch {}
 
-    // Mark as played so it runs only once per session
     try {
       sessionStorage.setItem('inter_iiit_intro_played', 'true');
     } catch {}
 
     const startTimer = setTimeout(() => setStage('playing'), 0);
-
-    // 2. Timeline Progression
-    // Phase 1 -> 2: Text Reveal after 1.2s
     const timer1 = setTimeout(() => setPhase(2), 1200);
-    // Phase 2 -> 3: Champions Trophy after 2.2s
     const timer2 = setTimeout(() => setPhase(3), 2200);
-    // Phase 3 -> Fade out after 3.9s
     const timer3 = setTimeout(() => setStage('fading'), 3900);
-    // Complete and unmount after 4.5s
     const timer4 = setTimeout(() => setStage('done'), 4500);
 
-    // 3. Escape key to skip
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         handleSkip();
@@ -80,8 +57,8 @@ export default function CinematicIntro() {
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      clearTimeout(timer1);
       clearTimeout(startTimer);
+      clearTimeout(timer1);
       clearTimeout(timer2);
       clearTimeout(timer3);
       clearTimeout(timer4);
@@ -90,7 +67,7 @@ export default function CinematicIntro() {
     };
   }, [stage]);
 
-  // 4. Celebration Particle Canvas (Activates in Phase 3)
+  // Particle Canvas
   useEffect(() => {
     if (stage !== 'playing' && stage !== 'fading') return;
     const canvas = canvasRef.current;
@@ -108,15 +85,14 @@ export default function CinematicIntro() {
     };
     window.addEventListener('resize', handleResize);
 
-    // Particle pool
     const particles = Array.from({ length: 65 }, () => ({
       x: Math.random() * width,
       y: height + Math.random() * 80,
-      size: Math.random() * 3.5 + 1.5,
-      speedY: Math.random() * 2.8 + 1.2,
-      speedX: (Math.random() - 0.5) * 1.6,
+      size: Math.random() * 3 + 1,
+      speedY: Math.random() * 2.5 + 1.2,
+      speedX: (Math.random() - 0.5) * 1.5,
       opacity: Math.random() * 0.8 + 0.2,
-      color: Math.random() > 0.4 ? '#f5c518' : '#2e7d32',
+      color: Math.random() > 0.5 ? '#FFC72C' : Math.random() > 0.25 ? '#22C55E' : '#FFFFFF',
     }));
 
     const render = () => {
@@ -165,32 +141,27 @@ export default function CinematicIntro() {
         stage === 'fading' ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
       style={{
-        background: 'radial-gradient(ellipse at center, #0a2112 0%, #041108 70%, #020804 100%)',
+        background: 'radial-gradient(ellipse at center, #0F2E1B 0%, #08140D 70%, #040A06 100%)',
       }}
     >
-      {/* ─── SKIP BUTTON ────────────────────────────────────────────── */}
+      {/* SKIP BUTTON */}
       <button
         onClick={handleSkip}
-        className="absolute top-6 right-6 z-50 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase transition-all duration-300 hover:scale-105"
-        style={{
-          background: 'rgba(255, 255, 255, 0.08)',
-          border: '1px solid rgba(245, 197, 24, 0.35)',
-          color: '#f5c518',
-          backdropFilter: 'blur(10px)',
-        }}
+        className="absolute top-6 right-6 z-50 px-5 py-2 rounded-full text-xs font-semibold tracking-widest uppercase transition-all duration-300 hover:scale-105 border border-white/20 text-white hover:border-[#FFC72C] hover:bg-[#FFC72C]/20 backdrop-blur-md"
+        style={{ background: 'rgba(255, 255, 255, 0.05)' }}
       >
         Skip Intro &times;
       </button>
 
-      {/* ─── BACKGROUND GLOW HORIZON ─────────────────────────────────── */}
+      {/* AMBIENT LIGHT */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at 50% 55%, rgba(245, 197, 24, 0.15) 0%, transparent 60%)',
+          background: 'radial-gradient(circle at 50% 55%, rgba(255, 199, 44, 0.18) 0%, transparent 60%)',
         }}
       />
 
-      {/* ─── STEP 1: PARALLAX PERSPECTIVE ROAD ──────────────────────── */}
+      {/* 3D PARALLAX ROAD */}
       <div
         className="absolute bottom-0 w-full flex justify-center pointer-events-none"
         style={{
@@ -199,59 +170,50 @@ export default function CinematicIntro() {
           overflow: 'hidden',
         }}
       >
-        {/* Road Surface */}
         <div
           className="relative w-[340px] sm:w-[500px] h-full"
           style={{
             transform: 'rotateX(72deg)',
             transformOrigin: 'bottom center',
-            background: 'linear-gradient(to top, #0d3319 0%, #06190c 70%, #030d06 100%)',
-            boxShadow: '0 0 50px rgba(27, 94, 32, 0.5)',
-            borderLeft: '4px solid rgba(245, 197, 24, 0.6)',
-            borderRight: '4px solid rgba(245, 197, 24, 0.6)',
+            background: 'linear-gradient(to top, #143D24 0%, #08140D 70%, #040A06 100%)',
+            boxShadow: '0 0 60px rgba(255, 199, 44, 0.3)',
+            borderLeft: '3px solid rgba(255, 199, 44, 0.8)',
+            borderRight: '3px solid rgba(255, 199, 44, 0.8)',
           }}
         >
-          {/* Animated Center Dashed Line */}
+          {/* Animated Center Track Line */}
           <div
-            className="absolute left-1/2 -translate-x-1/2 w-3 h-full"
+            className="absolute left-1/2 -translate-x-1/2 w-2.5 h-full"
             style={{
-              backgroundImage: 'linear-gradient(to bottom, #f5c518 40%, transparent 40%)',
-              backgroundSize: '12px 60px',
-              animation: 'roadDash 0.75s linear infinite',
+              backgroundImage: 'linear-gradient(to bottom, #FFC72C 40%, transparent 40%)',
+              backgroundSize: '10px 60px',
+              animation: 'roadDash 0.7s linear infinite',
             }}
           />
-
-          {/* Running Track Lane Markers */}
-          <div className="absolute left-1/4 w-0.5 h-full bg-white/20" />
-          <div className="absolute right-1/4 w-0.5 h-full bg-white/20" />
+          <div className="absolute left-1/4 w-0.5 h-full bg-white/10" />
+          <div className="absolute right-1/4 w-0.5 h-full bg-white/10" />
         </div>
       </div>
 
-      {/* ─── PARTICLE CANVAS ────────────────────────────────────────── */}
+      {/* PARTICLE CANVAS */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none z-20" />
 
-      {/* ─── STEP 2 & 3: CENTER VISUAL SEQUENCE ─────────────────────── */}
+      {/* CENTER SEQUENCE */}
       <div className="relative z-30 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
-        
-        {/* Eyebrow: 9th Edition */}
+        {/* Eyebrow */}
         <div
           className={`transition-all duration-700 transform mb-3 ${
             phase >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
           }`}
         >
           <span
-            className="inline-block px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.3em] border"
-            style={{
-              background: 'rgba(27, 94, 32, 0.4)',
-              borderColor: 'rgba(245, 197, 24, 0.4)',
-              color: '#f5c518',
-            }}
+            className="inline-block px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-[0.25em] border border-[#FFC72C]/40 bg-[#FFC72C]/10 text-[#FFC72C]"
           >
-            9th All India Inter-IIIT Sports Meet &bull; 2026
+            9th All India Inter-IIIT Sports Meet • 2026
           </span>
         </div>
 
-        {/* STEP 2: "ROAD TO GLORY" REVEAL */}
+        {/* ROAD TO GLORY */}
         <div
           className={`transition-all duration-1000 transform ${
             phase >= 2 ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-90 translate-y-8'
@@ -261,93 +223,87 @@ export default function CinematicIntro() {
             className="font-black text-transparent bg-clip-text leading-none tracking-tight mb-4 select-none animate-glowPulse"
             style={{
               fontSize: 'clamp(3rem, 9vw, 6.5rem)',
-              backgroundImage: 'linear-gradient(180deg, #ffffff 0%, #f5c518 55%, #c9972f 100%)',
-              textShadow: '0 0 35px rgba(245, 197, 24, 0.5)',
+              backgroundImage: 'linear-gradient(180deg, #FFFFFF 0%, #FDE68A 55%, #FFC72C 100%)',
+              textShadow: '0 0 35px rgba(255, 199, 44, 0.6)',
             }}
           >
             ROAD TO GLORY
           </h1>
           <p
-            className={`text-sm sm:text-base font-semibold tracking-[0.25em] uppercase text-white/80 transition-all duration-700 delay-200 ${
+            className={`text-sm sm:text-base font-semibold tracking-[0.25em] uppercase text-gray-200 transition-all duration-700 delay-200 ${
               phase >= 2 ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            25+ Institutes &bull; 2,000+ Athletes &bull; One Champion
+            25+ Institutes • 2,000+ Athletes • One Champion
           </p>
         </div>
 
-        {/* STEP 3: CHAMPIONS TROPHY & ATHLETES MOMENT */}
+        {/* CHAMPIONS TROPHY */}
         {phase >= 3 && (
           <div className="mt-8 flex flex-col items-center animate-trophyRise">
-            {/* Radiant Trophy Icon / Emblem */}
             <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center">
-              {/* Radial Light Halo */}
               <div
-                className="absolute inset-0 rounded-full animate-ping opacity-30"
-                style={{ background: 'radial-gradient(circle, #f5c518 0%, transparent 70%)' }}
+                className="absolute inset-0 rounded-full animate-ping opacity-25"
+                style={{ background: 'radial-gradient(circle, #FFC72C 0%, transparent 70%)' }}
               />
               
-              {/* Trophy SVG Graphic */}
               <svg
-                className="w-20 h-20 sm:w-24 sm:h-24 drop-shadow-[0_0_25px_rgba(245,197,24,0.85)]"
+                className="w-20 h-20 sm:w-24 sm:h-24 drop-shadow-[0_0_25px_rgba(255,199,44,0.85)]"
                 viewBox="0 0 24 24"
                 fill="none"
               >
                 <path
                   d="M12 2L14.5 7.5L20.5 8.5L16 13L17 19L12 16L7 19L8 13L3.5 8.5L9.5 7.5L12 2Z"
-                  fill="#f5c518"
-                  opacity="0.25"
+                  fill="#FFC72C"
+                  opacity="0.3"
                 />
                 <path
                   d="M6 3H18V8C18 11.31 15.31 14 12 14C8.69 14 6 11.31 6 8V3Z"
-                  fill="#f5c518"
-                  stroke="#c9972f"
+                  fill="#FFC72C"
+                  stroke="#F59E0B"
                   strokeWidth="1.5"
                 />
                 <path
                   d="M6 5H3C2.45 5 2 5.45 2 6C2 8.5 3.79 10.58 6 10.93V5Z"
-                  fill="#f5c518"
+                  fill="#FFC72C"
                 />
                 <path
                   d="M18 5H21C21.55 5 22 5.45 22 6C22 8.5 20.21 10.58 18 10.93V5Z"
-                  fill="#f5c518"
+                  fill="#FFC72C"
                 />
                 <path
                   d="M10 14V18H14V14"
-                  stroke="#c9972f"
+                  stroke="#F59E0B"
                   strokeWidth="2"
                   strokeLinecap="round"
                 />
                 <path
                   d="M7 21H17V18H7V21Z"
-                  fill="#f5c518"
-                  stroke="#c9972f"
+                  fill="#FFC72C"
+                  stroke="#F59E0B"
                   strokeWidth="1.5"
                 />
               </svg>
             </div>
 
-            {/* Victory Subtitle */}
-            <div className="mt-3 text-xs sm:text-sm font-black uppercase tracking-[0.3em] text-amber-300">
+            <div className="mt-3 text-xs sm:text-sm font-black uppercase tracking-[0.3em] text-[#FFC72C]">
               Where Champions Rise
             </div>
           </div>
         )}
-
       </div>
 
-      {/* ─── BOTTOM PROGRESS BAR ────────────────────────────────────── */}
+      {/* PROGRESS BAR */}
       <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10">
         <div
           className="h-full transition-all ease-linear"
           style={{
-            background: 'linear-gradient(90deg, #1b5e20 0%, #f5c518 100%)',
+            background: 'linear-gradient(90deg, #143D24 0%, #FFC72C 100%)',
             width: phase === 1 ? '30%' : phase === 2 ? '65%' : '100%',
             transitionDuration: phase === 1 ? '1.8s' : phase === 2 ? '1.5s' : '1.7s',
           }}
         />
       </div>
-
     </div>
   );
 }

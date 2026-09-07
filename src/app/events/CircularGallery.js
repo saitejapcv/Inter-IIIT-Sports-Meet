@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-const CINZEL_FONT_URL =
-  'https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cinzel+Decorative:wght@700;900&display=swap';
+const MONTSERRAT_FONT_URL =
+  'https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap';
 
 /**
  * Text scrambler hook
@@ -55,7 +55,7 @@ function useTextScramble(targetText, duration = 450) {
  * CircularGallery
  *
  * A canvas-rendered infinite horizontal gallery with cylindrical projection,
- * active center card scaling (1.18x), prominent border outline (#1C2E24),
+ * active center card scaling (1.18x), prominent border outline (#0066FF),
  * and an animated Top Title display with inline word-scramble effect.
  */
 export default function CircularGallery({
@@ -64,8 +64,8 @@ export default function CircularGallery({
   textColor = '#ffffff',
   borderRadius = 0.05,
   scrollEase = 0.1,
-  font = "bold 26px 'Cinzel', serif",
-  fontUrl = CINZEL_FONT_URL,
+  font = "800 24px 'Montserrat', sans-serif",
+  fontUrl = MONTSERRAT_FONT_URL,
   scrollSpeed = 2,
   onActiveChange,
 }) {
@@ -253,12 +253,12 @@ export default function CircularGallery({
           ctx.save();
           ctx.globalAlpha = easeCenter;
 
-          // Outer shadow
-          ctx.shadowColor = 'rgba(28, 46, 36, 0.45)';
+          // Outer shadow in Champion Gold
+          ctx.shadowColor = 'rgba(255, 199, 44, 0.45)';
           ctx.shadowBlur = 18 * easeCenter;
           ctx.shadowOffsetY = 4 * easeCenter;
 
-          // Prominent outline with padding (2px solid #1C2E24)
+          // Prominent outline with padding (2.5px solid #FFC72C)
           const pad = 4 * easeCenter;
           const bX = dX - pad;
           const bY = dY - pad;
@@ -266,15 +266,15 @@ export default function CircularGallery({
           const bH = dH + pad * 2;
           const bRadius = radius + pad * 0.8;
 
-          ctx.strokeStyle = '#1C2E24';
+          ctx.strokeStyle = '#FFC72C';
           ctx.lineWidth = 2.5;
           clipRoundedRect(bX, bY, bW, bH, bRadius);
           ctx.stroke();
 
-          // Clean gold hairline accent
+          // Clean Pine Green inner hairline accent
           ctx.shadowColor = 'transparent';
-          ctx.strokeStyle = 'rgba(245, 197, 24, 0.8)';
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = 'rgba(20, 61, 36, 0.9)';
+          ctx.lineWidth = 1.5;
           clipRoundedRect(dX, dY, dW, dH, radius);
           ctx.stroke();
 
@@ -291,8 +291,8 @@ export default function CircularGallery({
         } else {
           // Placeholder gradient
           const pg = ctx.createLinearGradient(dX, dY, dX, dY + dH);
-          pg.addColorStop(0, '#1C2E24');
-          pg.addColorStop(1, '#0b1610');
+          pg.addColorStop(0, '#1F2937');
+          pg.addColorStop(1, '#0C0C0C');
           ctx.fillStyle = pg;
           ctx.fillRect(dX, dY, dW, dH);
         }
@@ -300,18 +300,18 @@ export default function CircularGallery({
         // Bottom gradient overlay for readability
         const scrim = ctx.createLinearGradient(dX, dY + dH * 0.45, dX, dY + dH);
         scrim.addColorStop(0, 'rgba(0,0,0,0)');
-        scrim.addColorStop(1, 'rgba(10,25,18,0.92)');
+        scrim.addColorStop(1, 'rgba(12,12,12,0.92)');
         ctx.fillStyle = scrim;
         ctx.fillRect(dX, dY, dW, dH);
 
         ctx.restore();
 
-        // Gold accent bottom underline
+        // Champion Gold accent bottom underline
         if (finalScale > 0.45) {
           const lineAlpha = Math.min(1, (finalScale - 0.45) / 0.3);
           ctx.save();
           ctx.globalAlpha = lineAlpha * 0.9;
-          ctx.fillStyle = '#f5c518';
+          ctx.fillStyle = '#FFC72C';
           ctx.fillRect(dX + dW * 0.08, dY + dH - 4 * finalScale, dW * 0.32 * finalScale, 2 * finalScale);
           ctx.restore();
         }
@@ -526,22 +526,23 @@ export default function CircularGallery({
       <div className="w-full flex flex-col items-center justify-center pt-1 pb-4 text-center">
         {/* Eyebrow / Counter */}
         <div className="flex items-center gap-2 mb-1.5">
-          <span className="h-px w-6 bg-[#1C2E24]/30" />
-          <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#1C2E24]/75">
+          <span className="h-px w-6 bg-[#FFC72C]/40" />
+          <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#143D24]" style={{ color: '#143D24' }}>
             EVENT {String(activeIdx + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}
           </span>
-          <span className="h-px w-6 bg-[#1C2E24]/30" />
+          <span className="h-px w-6 bg-[#FFC72C]/40" />
         </div>
 
         {/* Word Shuffle Title with smooth position shift upward */}
         <div className="relative overflow-hidden min-h-[46px] flex items-center justify-center px-4">
           <h2
             key={activeIdx}
-            className="text-2xl sm:text-3xl md:text-4xl font-black tracking-wider uppercase text-[#1C2E24]"
+            className="text-2xl sm:text-3xl md:text-4xl font-black tracking-wider uppercase text-[#143D24]"
             style={{
-              fontFamily: "'Cinzel Decorative', 'Cinzel', serif",
+              fontFamily: "'Montserrat', sans-serif",
+              color: '#143D24',
               animation: 'sportTitleShift 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-              textShadow: '0 2px 10px rgba(28, 46, 36, 0.12)',
+              textShadow: '0 2px 10px rgba(255, 199, 44, 0.25)',
             }}
           >
             {scrambledTitle}
@@ -550,9 +551,9 @@ export default function CircularGallery({
 
         {/* Triple accent indicator */}
         <div className="mt-2 flex items-center gap-1.5">
-          <div className="h-1 w-1.5 rounded-full bg-[#1C2E24]" />
-          <div className="h-0.5 w-12 rounded-full bg-[#f5c518]" />
-          <div className="h-1 w-1.5 rounded-full bg-[#1C2E24]" />
+          <div className="h-1 w-1.5 rounded-full bg-[#143D24]" />
+          <div className="h-0.5 w-12 rounded-full bg-[#FFC72C]" />
+          <div className="h-1 w-1.5 rounded-full bg-[#143D24]" />
         </div>
       </div>
 
@@ -565,7 +566,7 @@ export default function CircularGallery({
           onClick={handlePrev}
           type="button"
           aria-label="Previous sport"
-          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#1C2E24]/85 hover:bg-[#1C2E24] text-[#F4F5EB] flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 active:scale-95 z-20 backdrop-blur-sm border border-[#f5c518]/50 cursor-pointer"
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#08140D]/90 hover:bg-[#FFC72C] text-white hover:text-[#08140D] flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 active:scale-95 z-20 backdrop-blur-sm border border-[#FFC72C]/30 cursor-pointer"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
@@ -577,7 +578,7 @@ export default function CircularGallery({
           onClick={handleNext}
           type="button"
           aria-label="Next sport"
-          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#1C2E24]/85 hover:bg-[#1C2E24] text-[#F4F5EB] flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 active:scale-95 z-20 backdrop-blur-sm border border-[#f5c518]/50 cursor-pointer"
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#08140D]/90 hover:bg-[#FFC72C] text-white hover:text-[#08140D] flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-110 active:scale-95 z-20 backdrop-blur-sm border border-[#FFC72C]/30 cursor-pointer"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
@@ -589,10 +590,10 @@ export default function CircularGallery({
       <p
         style={{
           marginTop: '12px',
-          color: '#1C2E24',
-          opacity: 0.6,
+          color: '#6B7280',
+          opacity: 0.8,
           fontSize: '11px',
-          fontFamily: "'Cinzel', serif",
+          fontFamily: "'Inter', sans-serif",
           letterSpacing: '0.18em',
           pointerEvents: 'none',
           userSelect: 'none',
@@ -610,20 +611,20 @@ export default function CircularGallery({
           aria-modal="true"
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/80 backdrop-blur-md transition-opacity duration-300"
           style={{ animation: 'lightboxFade 0.25s ease-out' }}
-          onClick={() => setZoomedItem(null)} // Dismiss / shrink on outside click
+          onClick={() => setZoomedItem(null)}
         >
           <div
-            className="relative max-w-xl w-full bg-[#1C2E24] border-2 border-[#f5c518] rounded-2xl overflow-hidden shadow-2xl transition-transform duration-300"
+            className="relative max-w-xl w-full bg-[#08140D] border border-[#FFC72C]/40 rounded-2xl overflow-hidden shadow-2xl transition-transform duration-300"
             style={{
               animation: 'lightboxZoom 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking on the card itself
+            onClick={(e) => e.stopPropagation()}
           >
             {/* Close button */}
             <button
               onClick={() => setZoomedItem(null)}
               aria-label="Close zoomed view"
-              className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-black/90 text-[#F4F5EB] flex items-center justify-center border border-white/20 transition-all duration-200 hover:scale-110 cursor-pointer shadow-lg"
+              className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-[#08140D]/80 hover:bg-[#FFC72C] text-white hover:text-[#08140D] flex items-center justify-center border border-[#FFC72C]/40 transition-all duration-200 hover:scale-110 cursor-pointer shadow-lg"
             >
               ✕
             </button>
@@ -635,21 +636,21 @@ export default function CircularGallery({
                 alt={zoomedItem.text}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1C2E24] via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#08140D] via-transparent to-transparent" />
             </div>
 
             {/* Content info */}
-            <div className="p-6 pt-2 bg-[#1C2E24]">
-              <span className="text-[10px] font-bold tracking-[0.25em] text-[#f5c518] uppercase">
+            <div className="p-6 pt-3 bg-[#08140D]">
+              <span className="text-[10px] font-bold tracking-[0.25em] text-[#FFC72C] uppercase" style={{ color: '#FFC72C' }}>
                 Inter-IIIT 2026 Event
               </span>
               <h3
-                className="text-2xl sm:text-3xl font-black text-[#F4F5EB] uppercase tracking-wide mt-1"
-                style={{ fontFamily: "'Cinzel Decorative', 'Cinzel', serif" }}
+                className="text-2xl sm:text-3xl font-black text-white uppercase tracking-wide mt-1"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: '#FFFFFF' }}
               >
                 {zoomedItem.text}
               </h3>
-              <p className="mt-3 text-xs sm:text-sm text-white/75 leading-relaxed font-light">
+              <p className="mt-3 text-xs sm:text-sm text-gray-200 leading-relaxed font-normal">
                 Official competitive event of the 9th Inter-IIIT Sports Meet at IIITDM Kancheepuram. Click outside or press Esc to return.
               </p>
             </div>

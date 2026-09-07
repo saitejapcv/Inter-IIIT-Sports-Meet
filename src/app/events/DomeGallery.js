@@ -278,7 +278,7 @@ export default function DomeGallery({
           ctx.shadowBlur = 18 * easeCenter;
           ctx.shadowOffsetY = 4 * easeCenter;
 
-          ctx.strokeStyle = '#1C2E24';
+          ctx.strokeStyle = '#0066FF';
           ctx.lineWidth = 2.5;
           rrPath(bX, bY, bW, bH, bRadius);
           ctx.stroke();

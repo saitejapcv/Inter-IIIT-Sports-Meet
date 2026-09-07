@@ -43,13 +43,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex" style={{ background: "#faf6ee" }}>
+    <div className="min-h-screen flex bg-white text-[#111111]">
       {/* Left panel - branding */}
       <div
-        className="hidden md:flex flex-col justify-between w-[42%] p-12 relative overflow-hidden"
-        style={{ background: "#f0d574" }}
+        className="hidden md:flex flex-col justify-between w-[42%] p-12 relative overflow-hidden bg-[#08140D] text-white border-r border-[#FFC72C]/20"
       >
-        <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 opacity-15">
           <Image
             src="/assets/hero/hero-placeholder.png"
             alt=""
@@ -58,15 +57,11 @@ export default function LoginPage() {
           />
         </div>
         <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(240,213,116,0.78) 0%, rgba(240,213,116,0.96) 100%)",
-          }}
+          className="absolute inset-0 bg-gradient-to-b from-[#08140D]/85 via-[#08140D]/95 to-[#08140D]"
         />
 
         <div className="relative z-10">
-          <div className="w-14 h-14 relative bg-white rounded-full p-1">
+          <div className="w-14 h-14 relative bg-white/10 backdrop-blur-md rounded-2xl p-2 border border-white/15">
             <Image
               src="/assets/brand/inter-iiit-logo.png"
               alt="Logo"
@@ -77,49 +72,40 @@ export default function LoginPage() {
         </div>
 
         <div className="relative z-10">
-          <div
-            className="text-xs font-black tracking-[0.2em] uppercase mb-3"
-            style={{ color: "#0a2112" }}
-          >
+          <div className="text-xs font-bold tracking-[0.25em] uppercase mb-3 text-[#FFC72C]" style={{ color: '#FFC72C' }}>
             9th Edition
           </div>
-          <h2 className="font-black text-3xl leading-tight mb-4" style={{ color: "#0a2112" }}>
+          <h2 className="font-black text-4xl leading-tight mb-4 text-white tracking-tight" style={{ color: '#FFFFFF' }}>
             Inter-IIIT
             <br />
             Sports Meet
             <br />
             2026
           </h2>
-          <div
-            className="w-10 h-0.5 rounded-full mb-6"
-            style={{ background: "#c9972f" }}
-          />
-          <p
-            className="text-sm leading-relaxed"
-            style={{ color: "rgba(10,33,18,0.76)" }}
-          >
+          <div className="w-12 h-1 rounded-full mb-6 bg-[#FFC72C]" />
+          <p className="text-sm leading-relaxed text-gray-200">
             19–23 December 2026
             <br />
-            IIITDM Kancheepuram, India
+            IIITDM Kancheepuram, Chennai
           </p>
         </div>
 
-        <div
-          className="relative z-10 text-xs"
-          style={{ color: "rgba(10,33,18,0.6)" }}
-        >
+        <div className="relative z-10 text-xs text-gray-300">
           © 2026 Inter-IIIT Sports Meet
         </div>
       </div>
 
       {/* Right panel - form */}
-      <div className="flex-1 flex items-center justify-center px-6 py-16">
+      <div className="flex-1 flex items-center justify-center px-6 py-16 bg-white">
         <div className="w-full max-w-sm">
           <div className="mb-8">
-            <h1 className="font-black text-2xl" style={{ color: "#0a2112" }}>
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#143D24]" style={{ color: '#143D24' }}>
+              Authentication
+            </span>
+            <h1 className="font-black text-3xl text-[#111111] tracking-tight mt-1">
               Sign In
             </h1>
-            <p className="text-sm mt-1.5" style={{ color: "#777" }}>
+            <p className="text-sm mt-1.5 text-[#6B7280]">
               Access the IIIT Registration Portal or Admin Console
             </p>
           </div>
@@ -130,12 +116,9 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-5">
             <div>
-              <label
-                className="block text-xs font-black uppercase tracking-wider mb-1.5"
-                style={{ color: "#444" }}
-              >
+              <label className="block text-xs font-bold uppercase tracking-wider mb-2 text-[#374151]">
                 Username (IIIT Code or Admin)
               </label>
               <input
@@ -143,26 +126,12 @@ export default function LoginPage() {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all border border-[#E5E7EB] bg-[#F8FAF8] focus:bg-white focus:border-[#143D24] focus:ring-2 focus:ring-[#143D24]/20 text-[#111111]"
                 placeholder="e.g. iiitdm-kancheepuram or admin"
-                style={{
-                  border: "1.5px solid rgba(27,94,32,0.2)",
-                  background: "#fff",
-                  color: "#0a2112",
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = "#1b5e20";
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = "rgba(27,94,32,0.2)";
-                }}
               />
             </div>
             <div>
-              <label
-                className="block text-xs font-black uppercase tracking-wider mb-1.5"
-                style={{ color: "#444" }}
-              >
+              <label className="block text-xs font-bold uppercase tracking-wider mb-2 text-[#374151]">
                 Password
               </label>
               <input
@@ -170,37 +139,24 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all border border-[#E5E7EB] bg-[#F8FAF8] focus:bg-white focus:border-[#143D24] focus:ring-2 focus:ring-[#143D24]/20 text-[#111111]"
                 placeholder="Enter password"
-                style={{
-                  border: "1.5px solid rgba(27,94,32,0.2)",
-                  background: "#fff",
-                  color: "#0a2112",
-                }}
-                onFocus={(e) => {
-                  e.target.style.borderColor = "#1b5e20";
-                }}
-                onBlur={(e) => {
-                  e.target.style.borderColor = "rgba(27,94,32,0.2)";
-                }}
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 rounded-xl font-black text-sm tracking-wide transition-all hover:-translate-y-0.5 hover:shadow-md mt-2 disabled:opacity-50"
-              style={{ background: "#f5c518", color: "#0a2112" }}
+              className="w-full py-3.5 rounded-xl font-bold text-sm text-[#FFC72C] tracking-wide transition-all bg-[#143D24] hover:bg-[#08140D] border border-[#FFC72C]/40 hover:-translate-y-0.5 shadow-md hover:shadow-[0_0_20px_rgba(255,199,44,0.3)] disabled:opacity-50 cursor-pointer"
             >
               {loading ? "Signing In..." : "Sign In →"}
             </button>
           </form>
 
-          <div className="mt-7 text-center text-sm" style={{ color: "#888" }}>
+          <div className="mt-8 text-center text-sm">
             <Link
               href="/"
-              className="font-bold transition-colors"
-              style={{ color: "#1b5e20" }}
+              className="font-semibold text-[#143D24] hover:underline inline-flex items-center gap-1"
             >
               ← Return to Home
             </Link>

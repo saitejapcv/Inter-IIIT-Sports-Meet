@@ -1,3 +1,8 @@
+'use client';
+
+import BlurText from '@/components/reactbits/BlurText';
+import ScrollReveal from '@/components/reactbits/ScrollReveal';
+
 const teamSections = [
   {
     title: "Our Patron",
@@ -33,51 +38,58 @@ const teamSections = [
 
 export default function Team() {
   return (
-    <div style={{ background: '#faf6ee', minHeight: '100vh' }}>
-      {/* Page header */}
-      <div className="py-16 px-4" style={{ background: '#f0d574' }}>
+    <div className="bg-white min-h-screen text-[#111111]">
+      {/* Page Header (Minimalist Dark) */}
+      <div className="pt-28 sm:pt-36 pb-16 sm:pb-20 px-4 sm:px-6 lg:px-8 bg-[#08140D] text-white border-b border-[#FFC72C]/20">
         <div className="max-w-7xl mx-auto">
-          <span className="text-xs font-black tracking-[0.25em] uppercase" style={{ color: '#040404' }}>
+          <span className="text-xs font-bold tracking-[0.25em] uppercase text-[#FFC72C]" style={{ color: '#FFC72C' }}>
             The People Behind It
           </span>
-          <h1 className="mt-3 font-black" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', color: '#0a2112' }}>
-            Meet the Team
+          <h1 className="mt-3 font-black text-4xl sm:text-6xl text-white tracking-tight" style={{ color: '#FFFFFF' }}>
+            <BlurText text="Meet the Team" delay={70} className="text-white" />
           </h1>
-          <div className="mt-3 w-12 h-1 rounded-full" style={{ background: '#000000' }} />
-          <p className="mt-4 text-sm max-w-xl" style={{ color: 'rgba(6, 6, 6, 0.6)' }}>
-            Dedicated individuals working tirelessly to make the 9th Inter-IIIT Sports Meet a reality.
+          <div className="mt-4 w-12 h-1 rounded-full bg-[#FFC72C]" />
+          <p className="mt-5 text-base sm:text-lg max-w-xl text-gray-200" style={{ color: '#E5E7EB' }}>
+            Dedicated faculty, staff, and student leaders working tirelessly to make the 9th Inter-IIIT Sports Meet a reality.
           </p>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+      {/* Team Content */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-24">
         {teamSections.map((section, sIdx) => (
-          <div key={sIdx}>
-            <div className="flex items-center gap-4 mb-10">
-              <div className="h-px flex-1" style={{ background: 'rgba(27,94,32,0.15)' }} />
-              <h3 className="text-xs font-black uppercase tracking-[0.25em] px-4" style={{ color: '#c9972f' }}>
+          <ScrollReveal key={sIdx} direction="up">
+            <div className="flex items-center gap-4 mb-12">
+              <div className="h-px flex-1 bg-[#E5E7EB]" />
+              <h3 className="text-xs font-bold uppercase tracking-[0.25em] px-4 text-[#143D24]" style={{ color: '#143D24' }}>
                 {section.title}
               </h3>
-              <div className="h-px flex-1" style={{ background: 'rgba(27,94,32,0.15)' }} />
+              <div className="h-px flex-1 bg-[#E5E7EB]" />
             </div>
 
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-8">
               {section.members.map((member, mIdx) => (
-                <div key={mIdx} className="text-center group" style={{ width: '180px' }}>
-                  {/* Avatar */}
-                  <div
-                    className="w-24 h-24 mx-auto rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg"
-                    style={{ background: '#1b5e20', border: '2px solid rgba(201,151,47,0.3)' }}>
-                    <span className="font-black text-2xl" style={{ color: '#f5c518' }}>
+                <div
+                  key={mIdx}
+                  className="text-center group p-4 rounded-2xl transition-all duration-300 hover:-translate-y-1"
+                  style={{ width: '190px' }}
+                >
+                  {/* Monogram Avatar */}
+                  <div className="w-24 h-24 mx-auto rounded-2xl flex items-center justify-center mb-4 bg-[#F8FAF8] border border-[#E5E7EB] group-hover:border-[#FFC72C] group-hover:shadow-[0_10px_25px_rgba(255,199,44,0.25)] transition-all duration-300">
+                    <span className="font-extrabold text-3xl text-[#111111] group-hover:text-[#143D24] transition-colors">
                       {member.initial}
                     </span>
                   </div>
-                  <h4 className="font-bold text-sm" style={{ color: '#0a2112' }}>{member.name}</h4>
-                  <p className="text-xs mt-0.5" style={{ color: '#888' }}>{member.role}</p>
+                  <h4 className="font-bold text-base text-[#111111] tracking-tight">
+                    {member.name}
+                  </h4>
+                  <p className="text-xs mt-1 text-[#6B7280] leading-snug">
+                    {member.role}
+                  </p>
                 </div>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
         ))}
       </div>
     </div>

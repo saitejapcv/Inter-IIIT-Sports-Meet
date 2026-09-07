@@ -267,7 +267,7 @@ export default function RegisterPage() {
           <div className="flex items-center gap-4 w-full sm:w-auto">
             <button 
               onClick={() => setIsReviewOpen(true)}
-              className="w-full sm:w-auto px-8 py-3.5 bg-[#f5c518] text-[#0a2112] font-black rounded-xl shadow hover:-translate-y-0.5 transition-all text-sm uppercase tracking-wide"
+              className="w-full sm:w-auto px-8 py-3.5 bg-[#143D24] hover:bg-[#08140D] text-[#FFC72C] font-black border border-[#FFC72C]/40 rounded-xl shadow-md hover:shadow-[0_0_20px_rgba(255,199,44,0.4)] hover:-translate-y-0.5 transition-all text-sm uppercase tracking-wide cursor-pointer"
             >
               Review &amp; Submit
             </button>
